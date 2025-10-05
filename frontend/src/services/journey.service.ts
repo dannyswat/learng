@@ -3,7 +3,6 @@ import {
   Journey,
   JourneyListResponse,
   CreateJourneyRequest,
-  Scenario,
 } from '@/types/api.types';
 
 export const journeyService = {
