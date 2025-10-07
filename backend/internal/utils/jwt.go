@@ -14,13 +14,13 @@ type JWTClaims struct {
 }
 
 // GenerateToken creates a new JWT token for a user
-func GenerateToken(userID, email, role, secret string) (string, error) {
+func GenerateToken(userID, role, secret string, duration time.Duration) (string, error) {
 	claims := &JWTClaims{
 		UserID: userID,
-		Email:  email,
+		Email:  "", // Email not included in token for security
 		Role:   role,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(duration)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
 	}

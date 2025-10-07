@@ -42,3 +42,6 @@ uploads/audio/*
 # OS
 .DS_Store
 Thumbs.db
+
+server.log
+bin/

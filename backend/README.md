@@ -1,254 +1,239 @@
-# learng Backend
+# Learng Backend
 
-Go backend for the learng language learning platform.
+AI-powered language learning platform backend built with Go and Echo framework.
 
-## Technology Stack
+## 🎯 Current Status
+
+✅ **Phase 1 - Sprint 1 Complete**
+- Authentication system fully implemented and tested
+- User registration and login working
+- JWT-based authentication
+- Protected endpoints with middleware
+- Input validation and error handling
+
+## Tech Stack
 
 - **Go**: 1.21+
-- **Framework**: Echo v4
-- **ORM**: GORM
-- **Database**: SQLite (MVP) → PostgreSQL (production)
-- **Authentication**: JWT
+- **Web Framework**: Echo v4.11.3
+- **ORM**: GORM v1.25.5
+- **Database**: SQLite 3.x (MVP) / PostgreSQL (Production)
+- **Authentication**: JWT (golang-jwt/jwt v5.1.0)
+- **Password Hashing**: bcrypt
 
-## Project Structure
-
-```
-backend/
-├── cmd/
-│   └── api/
-│       └── main.go           # Application entry point
-├── internal/
-│   ├── config/               # Configuration management
-│   ├── models/               # GORM models
-│   ├── handlers/             # HTTP handlers (controllers)
-│   ├── middleware/           # Custom middleware
-│   ├── services/             # Business logic
-│   ├── repository/           # Database access layer
-│   └── utils/                # Utility functions
-├── migrations/               # SQL migration files (future)
-├── uploads/                  # Local file storage (dev)
-│   ├── images/
-│   └── audio/
-├── go.mod
-├── go.sum
-├── .env.example
-└── README.md
-```
-
-## Getting Started
+## Quick Start
 
 ### Prerequisites
 
 - Go 1.21 or higher
-- Git
+- SQLite3
 
-### Installation
-
-1. **Clone the repository** (if not already done):
-   ```bash
-   git clone <repository-url>
-   cd learng/backend
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   go mod download
-   ```
-
-3. **Setup environment variables**:
-   ```bash
-   cp .env.example .env
-   # Edit .env and set JWT_SECRET
-   ```
-
-4. **Run the application**:
-   ```bash
-   go run cmd/api/main.go
-   ```
-
-   Or use the Makefile:
-   ```bash
-   make run
-   ```
-
-5. **Access the API**:
-   ```
-   http://localhost:8080
-   Health check: http://localhost:8080/health
-   ```
-
-## Development
-
-### Available Commands
+### Installation & Running
 
 ```bash
-# Run the application
-make run
+# Install dependencies
+go mod download
 
-# Run with hot reload (using air)
-make dev
-
-# Run tests
-make test
-
-# Build binary
+# Build the application
 make build
 
-# Clean build artifacts
-make clean
+# Run the server
+make run
+# or
+./bin/api
+```
 
-# Format code
-make fmt
+Server will start on http://localhost:8080
 
-# Run linter
-make lint
+### Test Authentication
 
-# Initialize database
-make db-init
+```bash
+# Run automated test suite
+./test-auth.sh
+```
+
+Expected output: ✅ All 10 tests pass
+
+## 📁 Project Structure
+
+```
+backend/
+├── cmd/api/main.go              # Application entry point
+├── internal/
+│   ├── config/                  # Configuration loading
+│   ├── handlers/
+│   │   └── auth.go             # ✅ Authentication endpoints
+│   ├── middleware/
+│   │   └── auth.go             # JWT authentication
+│   ├── models/                  # Database models (GORM)
+│   │   ├── user.go
+│   │   ├── journey.go
+│   │   ├── scenario.go
+│   │   └── ...
+│   ├── repository/
+│   │   └── user.repo.go        # ✅ User data access
+│   ├── services/
+│   │   └── auth.service.go     # ✅ Auth business logic
+│   └── utils/                   # Utilities (JWT, validation, etc.)
+├── docs/                        # API documentation
+│   └── api.md
+├── .env                         # Environment variables
+├── test-auth.sh                # ✅ Authentication tests
+├── Makefile                     # Build commands
+└── learng.db                   # SQLite database (auto-created)
+```
+
+## 🔐 API Endpoints
+
+### Public Endpoints
+- `GET /health` - Health check
+- `POST /api/v1/auth/register` - Register new user
+- `POST /api/v1/auth/login` - Login user
+
+### Protected Endpoints (Requires JWT)
+- `GET /api/v1/auth/me` - Get current user
+
+### Coming Soon
+- Journey CRUD endpoints
+- Scenario management
+- Word management
+- Media upload
+- Quiz system
+
+## 🧪 Testing
+
+### Automated Tests
+```bash
+./test-auth.sh
+```
+
+Tests include:
+- ✅ User registration (admin/learner)
+- ✅ Login flow
+- ✅ Protected endpoint access
+- ✅ Duplicate email prevention
+- ✅ Input validation (email, password)
+- ✅ Error handling
+
+### Manual Testing
+```bash
+# Register
+curl -X POST http://localhost:8080/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@test.com","password":"password123","displayName":"Test User","role":"admin"}'
+
+# Login
+curl -X POST http://localhost:8080/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@test.com","password":"password123"}'
+
+# Get current user (use token from login)
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  http://localhost:8080/api/v1/auth/me
+```
+
+## 📚 Documentation
+
+- [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md) - Quick start and debugging
+- [AUTH_IMPLEMENTATION.md](AUTH_IMPLEMENTATION.md) - Authentication details
+- [TEST_RESULTS.md](TEST_RESULTS.md) - Latest test results
+- [docs/api.md](docs/api.md) - API documentation
+
+## 🏗️ Architecture
+
+**Three-Layer Architecture**:
+1. **Handler Layer** - HTTP request/response handling
+2. **Service Layer** - Business logic and validation
+3. **Repository Layer** - Database operations
+
+**Key Features**:
+- Dependency injection in `main.go`
+- Middleware for authentication and CORS
+- Structured error responses
+- Input validation utilities
+- JWT token management
+
+## 🔧 Development
+
+### Make Commands
+```bash
+make build    # Build the application
+make run      # Run the application
+make test     # Run tests
+make clean    # Remove build artifacts
 ```
 
 ### Environment Variables
 
-See `.env.example` for all available configuration options:
-
-- `PORT`: Server port (default: 8080)
-- `DB_PATH`: SQLite database file path
-- `JWT_SECRET`: Secret key for JWT tokens (REQUIRED)
-- `UPLOAD_DIR`: Directory for uploaded files
-- `STATIC_DIR`: Frontend build directory (production only)
-- `MAX_IMAGE_SIZE`: Maximum image upload size in bytes
-- `MAX_AUDIO_SIZE`: Maximum audio upload size in bytes
-
-### Database Migrations
-
-The application uses GORM's AutoMigrate feature for development:
-
-```go
-db.AutoMigrate(
-    &models.User{},
-    &models.Journey{},
-    // ... other models
-)
+Create `.env` file:
+```env
+APP_ENV=development
+APP_PORT=8080
+DB_DRIVER=sqlite
+DB_PATH=./learng.db
+JWT_SECRET=your-secret-key-here
+UPLOAD_DIR=./uploads
+MAX_FILE_SIZE=10485760
+ALLOWED_ORIGINS=http://localhost:5173
 ```
 
-For production, proper migration files will be added.
+### Database
 
-## API Endpoints
-
-### Authentication
-
-- `POST /api/v1/auth/register` - Register new user
-- `POST /api/v1/auth/login` - Login user
-
-### Journeys (Admin)
-
-- `GET /api/v1/journeys` - List journeys
-- `POST /api/v1/journeys` - Create journey
-- `GET /api/v1/journeys/:id` - Get journey details
-- `PUT /api/v1/journeys/:id` - Update journey
-- `DELETE /api/v1/journeys/:id` - Delete journey
-
-### Scenarios (Admin)
-
-- `POST /api/v1/scenarios` - Create scenario
-- `GET /api/v1/scenarios/:id` - Get scenario details
-- `PUT /api/v1/scenarios/:id` - Update scenario
-- `DELETE /api/v1/scenarios/:id` - Delete scenario
-
-### Words (Admin)
-
-- `POST /api/v1/words` - Create word
-- `GET /api/v1/words/:id` - Get word details
-- `PUT /api/v1/words/:id` - Update word
-- `DELETE /api/v1/words/:id` - Delete word
-
-### Media Upload (Admin)
-
-- `POST /api/v1/media/upload/image` - Upload image
-- `POST /api/v1/media/upload/audio` - Upload audio
-
-### Learner Endpoints
-
-- `GET /api/v1/learner/journeys` - List available journeys
-- `GET /api/v1/learner/scenarios/:id` - Get scenario with words
-- `POST /api/v1/learner/progress` - Track word view
-
-### Quizzes
-
-- `GET /api/v1/quizzes/:id` - Get quiz questions
-- `POST /api/v1/quizzes/:id/submit` - Submit quiz answers
-
-## Testing
-
+View database contents:
 ```bash
-# Run all tests
-go test ./...
-
-# Run tests with coverage
-go test -cover ./...
-
-# Run specific package tests
-go test ./internal/handlers
+sqlite3 learng.db
+> .tables
+> SELECT * FROM users;
+> .quit
 ```
 
-## Building for Production
+## 🚀 Next Steps
 
-### Build Binary
+### Sprint 2 (Weeks 3-4)
+- [ ] Journey CRUD endpoints
+- [ ] Scenario management
+- [ ] Word management
+- [ ] Admin-only routes with role middleware
 
+### Sprint 3 (Weeks 5-6)
+- [ ] Media upload handling
+- [ ] AI service integration stubs
+- [ ] Quiz system
+
+### Future
+- [ ] PostgreSQL migration
+- [ ] Docker deployment
+- [ ] API rate limiting
+- [ ] Refresh token mechanism
+
+## 📝 Contributing
+
+1. Follow the three-layer architecture pattern
+2. Add tests for new endpoints
+3. Update documentation
+4. Use the existing error handling patterns
+
+## 🐛 Troubleshooting
+
+**Port already in use**:
 ```bash
-make build
-# or
-go build -o learng-api ./cmd/api
+lsof -ti:8080 | xargs kill -9
 ```
 
-### Docker Build
-
-See the root Dockerfile for multi-stage build that includes frontend.
-
-For backend-only testing:
-
+**Database locked**:
 ```bash
-docker build -t learng-backend:latest -f Dockerfile.backend .
-docker run -p 8080:8080 learng-backend:latest
+# Kill all instances and restart
+pkill api
+./bin/api
 ```
 
-## Project Status
+**Missing JWT_SECRET**:
+```bash
+# Create .env file with JWT_SECRET
+echo "JWT_SECRET=dev-secret-change-in-production" >> .env
+```
 
-### Completed ✅
+---
 
-- [x] Project structure setup
-- [x] GORM models defined
-- [x] Configuration management
-- [x] JWT authentication utilities
-- [x] Middleware (auth, CORS, logging)
-- [x] Database initialization
-
-### In Progress 🚧
-
-- [ ] Handler implementation (auth, journeys, etc.)
-- [ ] Repository layer
-- [ ] Service layer
-- [ ] File upload handling
-- [ ] Comprehensive tests
-
-### Planned 📋
-
-- [ ] AI integration (Phase 2)
-- [ ] Advanced analytics
-- [ ] Rate limiting
-- [ ] API documentation (Swagger)
-
-## Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Run tests and linting
-4. Submit a pull request
-
-## License
-
-[To be determined]
-
-## Support
-
-For questions or issues, please contact the development team.
+**Last Updated**: 2025-10-07  
+**Current Version**: v0.1.0-alpha  
+**Status**: ✅ Authentication Complete | 🚧 Journey Management In Progress

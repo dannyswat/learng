@@ -11,7 +11,11 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/learng/backend/internal/config"
+	"github.com/learng/backend/internal/handlers"
+	customMiddleware "github.com/learng/backend/internal/middleware"
 	"github.com/learng/backend/internal/models"
+	"github.com/learng/backend/internal/repository"
+	"github.com/learng/backend/internal/services"
 )
 
 func main() {
@@ -22,10 +26,19 @@ func main() {
 	}
 
 	// Initialize database
-	_, err = initDatabase(cfg)
+	db, err := initDatabase(cfg)
 	if err != nil {
 		log.Fatal("Failed to initialize database:", err)
 	}
+
+	// Initialize repositories
+	userRepo := repository.NewUserRepository(db)
+
+	// Initialize services
+	authService := services.NewAuthService(userRepo, cfg.JWTSecret)
+
+	// Initialize handlers
+	authHandler := handlers.NewAuthHandler(authService)
 
 	// Create Echo instance
 	e := echo.New()
@@ -46,17 +59,14 @@ func main() {
 	// API routes (v1)
 	api := e.Group("/api/v1")
 
-	api.GET("/ping", func(c echo.Context) error {
-		return c.JSON(200, map[string]string{
-			"message": "pong",
-		})
-	})
+	// Public routes (no authentication required)
+	api.POST("/auth/register", authHandler.Register)
+	api.POST("/auth/login", authHandler.Login)
 
-	// TODO: Register route handlers here
-	// Example:
-	// authHandler := handlers.NewAuthHandler(db, cfg)
-	// api.POST("/auth/register", authHandler.Register)
-	// api.POST("/auth/login", authHandler.Login)
+	// Protected routes (authentication required)
+	protected := api.Group("")
+	protected.Use(customMiddleware.AuthMiddleware(cfg.JWTSecret))
+	protected.GET("/auth/me", authHandler.GetMe)
 
 	// Serve uploaded media files
 	e.Static("/uploads", cfg.UploadDir)
