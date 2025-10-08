@@ -102,6 +102,9 @@ export interface CreateWordRequest {
   targetText: string;
   sourceText: string;
   displayOrder: number;
+  imageUrl?: string;
+  audioUrl?: string;
+  generationMethod?: 'manual' | 'ai_image' | 'ai_audio' | 'ai_both';
 }
 
 export interface UpdateWordRequest {
