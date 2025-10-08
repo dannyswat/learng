@@ -2,11 +2,9 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { LoginPage } from './pages/LoginPage';
-
-// Placeholder components (to be implemented)
-const RegisterPage = () => <div>Register Page - Coming Soon</div>;
-const AdminDashboard = () => <div>Admin Dashboard - Coming Soon</div>;
-const LearnerDashboard = () => <div>Learner Dashboard - Coming Soon</div>;
+import { RegisterPage } from './pages/RegisterPage';
+import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { LearnerDashboard } from './pages/learner/LearnerDashboard';
 
 // Protected route wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode; requireRole?: 'admin' | 'learner' }> = ({
