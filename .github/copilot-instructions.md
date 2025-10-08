@@ -140,5 +140,67 @@ npm run lint                    # ESLint + Prettier
 - **Regional Respect**: Suggest Asia-Pacific regions (Hong Kong, Singapore) for deployments/AI endpoints
 - **Test AI Paths**: When adding adapter implementations, include mock/stub tests to avoid live API costs in CI
 
+## Documentation Guidelines (IMPORTANT)
+**Keep documentation minimal and consolidated:**
+
+### ✅ DO Create/Update:
+1. **PROJECT_STATUS.md** (root) - Single source of truth for overall project status
+   - Sprint progress tracker
+   - Current phase and next steps
+   - High-level file inventory
+   - Key metrics
+
+2. **README.md** (per directory) - Quick start and setup only
+   - Installation steps
+   - How to run/test
+   - Basic usage examples
+   - Links to PROJECT_STATUS.md
+
+3. **Test Scripts** - Executable documentation
+   - Self-documenting test files (e.g., `test-sprint2.sh`)
+   - Include comments explaining what's being tested
+   - Better than separate test documentation
+
+4. **Code Comments** - Inline documentation
+   - Complex logic explanations
+   - API endpoint documentation (OpenAPI/Swagger comments)
+   - Function/class docstrings
+
+### ❌ DO NOT Create:
+- ❌ Separate files for each sprint (e.g., `SPRINT2_SUMMARY.md`, `SPRINT2_COMPLETE.md`)
+- ❌ Multiple "index" or "guide" files (e.g., `SPRINT2_INDEX.md`, `SPRINT2_QUICK_REF.md`)
+- ❌ Redundant status files (e.g., `TEST_RESULTS.md`, `TEST_RESULTS_SPRINT2.md`)
+- ❌ "CREATION_SUMMARY.md" or similar scaffolding documentation
+- ❌ Multiple reference guides (consolidate into README or PROJECT_STATUS)
+- ❌ Files that duplicate information from other docs
+
+### 📝 Documentation Updates:
+- **When starting a sprint**: Update PROJECT_STATUS.md with new tasks
+- **When completing a sprint**: Update PROJECT_STATUS.md with results, keep sprint notes in comments
+- **When adding features**: Update relevant README.md, add inline code comments
+- **When testing**: Use test scripts as executable documentation
+
+### 🗂️ Approved Documentation Structure:
+```
+learng/
+├── PROJECT_STATUS.md          # Single source of truth
+├── REQUIREMENT.md             # Business requirements (don't modify)
+├── README.md                  # Project setup
+├── design/
+│   ├── CORE.md               # Technical specification
+│   └── SUMMARY.md            # Design summary
+├── backend/
+│   ├── README.md             # Backend setup and API reference
+│   └── test-*.sh             # Executable test documentation
+└── frontend/
+    └── README.md             # Frontend setup and component guide
+```
+
+### 📊 When Asked to Document Progress:
+1. Update PROJECT_STATUS.md with bullet points
+2. Update relevant README.md if setup changed
+3. Add comments to test scripts
+4. **DO NOT** create new markdown files unless absolutely necessary
+
 ---
-**Last Updated**: 2025-10-05 | **Next Update Trigger**: After tech stack decision + initial scaffold commit
+**Last Updated**: 2025-10-08 | **Current Stack**: Go + Echo + GORM + React + Vite
