@@ -36,29 +36,39 @@
 - [x] **Frontend**: Successful production build
 
 ### Phase 1: Sprint 2 ✅ COMPLETE
-**Content Management APIs** - Journey/Scenario/Word CRUD fully implemented and tested
+**Content Management APIs** - Journey/Scenario/Word CRUD + Media Upload fully implemented
 
 **Delivered:**
 - [x] Journey CRUD (5 endpoints): Create, List, Get, Update, Delete
 - [x] Scenario CRUD (4 endpoints): Create, Get, Update, Delete  
 - [x] Word CRUD (4 endpoints): Create, Get, Update, Delete
+- [x] **Media Upload (2 endpoints)**: Image upload, Audio upload
 - [x] 3-layer architecture: Handlers → Services → Repositories
 - [x] Nested data loading (1 query for journey + scenarios + words)
 - [x] Cascade deletions (automatic cleanup)
 - [x] Ownership validation (only creators can modify)
 - [x] Pagination & filtering
-- [x] Comprehensive test suite (17 scenarios, all passing)
+- [x] **File validation**: MIME type, size limits, extension checks
+- [x] **Static file serving**: /uploads/images, /uploads/audio
+- [x] Comprehensive test suite (17 scenarios + 11 media tests, all passing)
 
-**Files Created (9):**
+**Files Created (12):**
 - 3 Repositories: `journey.repo.go`, `scenario.repo.go`, `word.repo.go`
 - 3 Services: `journey.service.go`, `scenario.service.go`, `word.service.go`
-- 3 Handlers: `journey.go`, `scenario.go`, `word.go`
+- 4 Handlers: `journey.go`, `scenario.go`, `word.go`, `media.go`
+- 2 Test Scripts: `test-sprint2.sh`, `test-media.sh`
 
 **Test Results:**
 ```
-✅ Journey CRUD: PASS
-✅ Scenario CRUD: PASS
-✅ Word CRUD: PASS
+✅ Journey CRUD: PASS (5 endpoints)
+✅ Scenario CRUD: PASS (4 endpoints)
+✅ Word CRUD: PASS (4 endpoints)
+✅ Media Upload: PASS (11 scenarios)
+  - Image upload (PNG, JPEG): PASS
+  - Audio upload (WAV, MP3, WebM): PASS
+  - File validation (size, type, extension): PASS
+  - Authentication required: PASS
+  - Files accessible via /uploads: PASS
 ✅ Nested data retrieval: PASS
 ✅ Cascade deletions: PASS
 ```

@@ -48,6 +48,7 @@ func main() {
 	journeyHandler := handlers.NewJourneyHandler(journeyService)
 	scenarioHandler := handlers.NewScenarioHandler(scenarioService)
 	wordHandler := handlers.NewWordHandler(wordService)
+	mediaHandler := handlers.NewMediaHandler(cfg.UploadDir)
 
 	// Create Echo instance
 	e := echo.New()
@@ -95,6 +96,10 @@ func main() {
 	protected.GET("/words/:id", wordHandler.GetWordByID)
 	protected.PUT("/words/:id", wordHandler.UpdateWord)
 	protected.DELETE("/words/:id", wordHandler.DeleteWord)
+
+	// Media upload routes
+	protected.POST("/media/upload/image", mediaHandler.UploadImage)
+	protected.POST("/media/upload/audio", mediaHandler.UploadAudio)
 
 	// Serve uploaded media files
 	e.Static("/uploads", cfg.UploadDir)
