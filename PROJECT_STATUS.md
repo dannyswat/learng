@@ -1,7 +1,7 @@
 # learng Project Status
 
-**Last Updated**: 2025-10-07  
-**Current Phase**: Sprint 1 Complete - Full Stack Authentication ✅
+**Last Updated**: 2025-10-08  
+**Current Phase**: Sprint 2 Complete - Content Management APIs ✅
 
 ---
 
@@ -35,12 +35,27 @@
 - [x] **Frontend**: Tailwind CSS v4 compatibility
 - [x] **Frontend**: Successful production build
 
-### Phase 1: Sprint 2 🚧 NEXT
-**Content Management** - Journey/Scenario/Word CRUD
-- [ ] Journey repository, service, handlers
-- [ ] Scenario repository, service, handlers
-- [ ] Word repository, service, handlers
-- [ ] Admin UI for content creation
+### Phase 1: Sprint 2 ✅ COMPLETE
+**Content Management APIs** - Journey/Scenario/Word CRUD fully implemented and tested
+- [x] **Backend**: Journey repository, service, handlers (5 endpoints)
+- [x] **Backend**: Scenario repository, service, handlers (4 endpoints)
+- [x] **Backend**: Word repository, service, handlers (4 endpoints)
+- [x] **Backend**: 3-layer architecture (handlers → services → repositories)
+- [x] **Backend**: Nested data loading (journey → scenarios → words)
+- [x] **Backend**: Pagination and filtering
+- [x] **Backend**: Cascade deletions
+- [x] **Backend**: Ownership validation
+- [x] **Backend**: Comprehensive test suite (17 scenarios, all passing)
+- [x] **Backend**: Documentation (SPRINT2_SUMMARY.md, SPRINT2_QUICK_REF.md, TEST_RESULTS_SPRINT2.md)
+- [x] **Project**: Sprint summary (SPRINT2_COMPLETE.md)
+
+### Phase 1: Sprint 3 🚧 NEXT
+**Media Handling** - Upload and storage
+- [ ] Backend: Image upload endpoint with validation
+- [ ] Backend: Audio upload endpoint with validation
+- [ ] Frontend: Audio recorder component (MediaRecorder API)
+- [ ] Frontend: Image uploader component (drag-drop)
+- [ ] Frontend: Admin UI for journey/scenario/word management
 
 ---
 

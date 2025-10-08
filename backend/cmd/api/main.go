@@ -33,12 +33,21 @@ func main() {
 
 	// Initialize repositories
 	userRepo := repository.NewUserRepository(db)
+	journeyRepo := repository.NewJourneyRepository(db)
+	scenarioRepo := repository.NewScenarioRepository(db)
+	wordRepo := repository.NewWordRepository(db)
 
 	// Initialize services
 	authService := services.NewAuthService(userRepo, cfg.JWTSecret)
+	journeyService := services.NewJourneyService(journeyRepo, scenarioRepo)
+	scenarioService := services.NewScenarioService(scenarioRepo, journeyRepo)
+	wordService := services.NewWordService(wordRepo, scenarioRepo)
 
 	// Initialize handlers
 	authHandler := handlers.NewAuthHandler(authService)
+	journeyHandler := handlers.NewJourneyHandler(journeyService)
+	scenarioHandler := handlers.NewScenarioHandler(scenarioService)
+	wordHandler := handlers.NewWordHandler(wordService)
 
 	// Create Echo instance
 	e := echo.New()
@@ -67,6 +76,25 @@ func main() {
 	protected := api.Group("")
 	protected.Use(customMiddleware.AuthMiddleware(cfg.JWTSecret))
 	protected.GET("/auth/me", authHandler.GetMe)
+
+	// Journey routes (admin only for create/update/delete)
+	protected.GET("/journeys", journeyHandler.GetJourneys)
+	protected.GET("/journeys/:id", journeyHandler.GetJourneyByID)
+	protected.POST("/journeys", journeyHandler.CreateJourney)
+	protected.PUT("/journeys/:id", journeyHandler.UpdateJourney)
+	protected.DELETE("/journeys/:id", journeyHandler.DeleteJourney)
+
+	// Scenario routes
+	protected.POST("/scenarios", scenarioHandler.CreateScenario)
+	protected.GET("/scenarios/:id", scenarioHandler.GetScenarioByID)
+	protected.PUT("/scenarios/:id", scenarioHandler.UpdateScenario)
+	protected.DELETE("/scenarios/:id", scenarioHandler.DeleteScenario)
+
+	// Word routes
+	protected.POST("/words", wordHandler.CreateWord)
+	protected.GET("/words/:id", wordHandler.GetWordByID)
+	protected.PUT("/words/:id", wordHandler.UpdateWord)
+	protected.DELETE("/words/:id", wordHandler.DeleteWord)
 
 	// Serve uploaded media files
 	e.Static("/uploads", cfg.UploadDir)

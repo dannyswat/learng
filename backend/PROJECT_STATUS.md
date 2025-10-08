@@ -1,7 +1,42 @@
-# Backend Project Structure - Created Successfully ✅
+# Backend Project Status
+
+## Current Sprint: Sprint 2 ✅ COMPLETE
 
 ## Overview
-The backend project structure has been created with all necessary files and directories for the learng MVP.
+The backend for learng MVP is progressing through planned sprints as outlined in CORE.md.
+
+## Sprint Progress
+
+### ✅ Sprint 1: Foundation (Week 1-2) - COMPLETE
+- [x] Backend project setup with Go + Echo + GORM
+- [x] Database models for all entities
+- [x] Auth endpoints (register, login, JWT middleware)
+- [x] Configuration management
+- [x] Development tooling (Makefile, hot reload)
+
+### ✅ Sprint 2: Admin Core (Week 3-4) - COMPLETE
+- [x] Journey CRUD APIs
+- [x] Scenario CRUD APIs  
+- [x] Word CRUD APIs
+- [x] Repository layer (data access)
+- [x] Service layer (business logic)
+- [x] Handler layer (HTTP endpoints)
+- [x] Nested data loading (journey → scenarios → words)
+- [x] Cascade deletions
+- [x] Ownership validation
+- [x] Pagination and filtering
+- [x] Comprehensive test suite
+
+**Documentation:**
+- `SPRINT2_SUMMARY.md` - Detailed sprint documentation
+- `SPRINT2_QUICK_REF.md` - Developer quick reference
+- `test-sprint2.sh` - Automated API tests
+
+### 🔄 Sprint 3: Media Handling (Week 5-6) - NEXT
+- [ ] Media upload endpoints (image, audio)
+- [ ] File validation and storage
+- [ ] Frontend audio recorder component
+- [ ] Frontend image upload component
 
 ## Created Structure
 
@@ -21,11 +56,23 @@ backend/
 │   │   ├── quiz.go                    ✅ Quiz & QuizQuestion models
 │   │   ├── progress.go                ✅ LearnerProgress model
 │   │   └── quiz_attempt.go            ✅ QuizAttempt model
-│   ├── handlers/                      📁 Empty (to be implemented)
+│   ├── handlers/
+│   │   ├── auth.go                    ✅ Authentication handlers
+│   │   ├── journey.go                 ✅ Journey CRUD handlers (Sprint 2)
+│   │   ├── scenario.go                ✅ Scenario CRUD handlers (Sprint 2)
+│   │   └── word.go                    ✅ Word CRUD handlers (Sprint 2)
 │   ├── middleware/
 │   │   └── auth.go                    ✅ JWT authentication middleware
-│   ├── services/                      📁 Empty (to be implemented)
-│   ├── repository/                    📁 Empty (to be implemented)
+│   ├── services/
+│   │   ├── auth.service.go            ✅ Authentication business logic
+│   │   ├── journey.service.go         ✅ Journey business logic (Sprint 2)
+│   │   ├── scenario.service.go        ✅ Scenario business logic (Sprint 2)
+│   │   └── word.service.go            ✅ Word business logic (Sprint 2)
+│   ├── repository/
+│   │   ├── user.repo.go               ✅ User data access
+│   │   ├── journey.repo.go            ✅ Journey data access (Sprint 2)
+│   │   ├── scenario.repo.go           ✅ Scenario data access (Sprint 2)
+│   │   └── word.repo.go               ✅ Word data access (Sprint 2)
 │   └── utils/
 │       ├── jwt.go                     ✅ JWT token utilities
 │       ├── password.go                ✅ Password hashing utilities
@@ -41,8 +88,39 @@ backend/
 ├── .air.toml                          ✅ Hot reload configuration
 ├── Makefile                           ✅ Build automation
 ├── README.md                          ✅ Documentation
-└── setup.sh                           ✅ Setup script
+├── setup.sh                           ✅ Setup script
+├── test-sprint2.sh                    ✅ Sprint 2 API test suite
+├── SPRINT2_SUMMARY.md                 ✅ Sprint 2 documentation
+├── SPRINT2_QUICK_REF.md               ✅ Developer quick reference
+└── PROJECT_STATUS.md                  ✅ This file
 ```
+
+## API Endpoints Implemented
+
+### Sprint 1: Authentication
+- `POST /api/v1/auth/register` - User registration
+- `POST /api/v1/auth/login` - User login
+- `GET /api/v1/auth/me` - Get current user (protected)
+
+### Sprint 2: Content Management (Admin)
+**Journeys:**
+- `POST /api/v1/journeys` - Create journey
+- `GET /api/v1/journeys` - List journeys (with pagination/filtering)
+- `GET /api/v1/journeys/:id` - Get journey with nested data
+- `PUT /api/v1/journeys/:id` - Update journey
+- `DELETE /api/v1/journeys/:id` - Delete journey
+
+**Scenarios:**
+- `POST /api/v1/scenarios` - Create scenario
+- `GET /api/v1/scenarios/:id` - Get scenario with words
+- `PUT /api/v1/scenarios/:id` - Update scenario
+- `DELETE /api/v1/scenarios/:id` - Delete scenario
+
+**Words:**
+- `POST /api/v1/words` - Create word
+- `GET /api/v1/words/:id` - Get word
+- `PUT /api/v1/words/:id` - Update word
+- `DELETE /api/v1/words/:id` - Delete word
 
 ## Key Features Implemented
 
